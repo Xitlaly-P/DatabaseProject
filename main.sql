@@ -34,9 +34,6 @@ CREATE TABLE GUEST (
     GuestID         CHAR(7)     NOT NULL,
     GuestName       VARCHAR(30)     NOT NULL,
     PartySize       INT             NOT NULL,
-    RoomCharges     INT,
-    ServiceCharges  INT,
-    TotalCharges    INT,
     PRIMARY KEY (GuestID)
 ) ;
 
