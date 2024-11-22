@@ -31,7 +31,7 @@ CREATE TABLE ROOM (
 ) ;
 
 CREATE TABLE GUEST (
-    GuestID         CHAR(15)     NOT NULL,
+    GuestID         CHAR(7)     NOT NULL,
     GuestName       VARCHAR(30)     NOT NULL,
     PartySize       INT             NOT NULL,
     RoomCharges     INT,
@@ -41,19 +41,19 @@ CREATE TABLE GUEST (
 ) ;
 
 CREATE TABLE EMPLOYEE (
-    EmployeeID      CHAR(15)     NOT NULL,
+    EmployeeID      CHAR(7)     NOT NULL,
     EmployeeName    VARCHAR(30)     NOT NULL,
     PRIMARY KEY (EmployeeID)
 ) ;
 
 CREATE TABLE SERVICE (
-    ServiceID      CHAR(15)     NOT NULL,
+    ServiceID      CHAR(7)     NOT NULL,
     ServiceName    VARCHAR(30)     NOT NULL,
     PRIMARY KEY (ServiceID)
 ) ;
 
 CREATE TABLE Laundry (
-    ServiceID      CHAR(15)     NOT NULL,
+    ServiceID      CHAR(7)     NOT NULL,
     LaundryType VARCHAR(30) NOT NULL,
     PRIMARY KEY (ServiceID),
     CONSTRAINT FK_LaundryService FOREIGN KEY (ServiceID)
@@ -61,7 +61,7 @@ CREATE TABLE Laundry (
 ) ;
 
 CREATE TABLE TravelDesk (
-    ServiceID      CHAR(15)     NOT NULL,
+    ServiceID      CHAR(7)     NOT NULL,
     AreaOfInterest VARCHAR(50)     NOT NULL,
     AppointmentDate TIMESTAMP      NOT NULL,
     PRIMARY KEY (ServiceID),
@@ -70,7 +70,7 @@ CREATE TABLE TravelDesk (
 );
 
 CREATE TABLE RentDevice (
-    ServiceID      CHAR(15)     NOT NULL,
+    ServiceID      CHAR(7)     NOT NULL,
     DeviceRented     VARCHAR(30)     NOT NULL,
     RentStart    TIMESTAMP       NOT NULL,
     RentEnd      TIMESTAMP       NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE RentDevice (
 );
 
 CREATE TABLE Business (
-    ServiceID      CHAR(15)     NOT NULL,
+    ServiceID      CHAR(7)     NOT NULL,
     ConNum     CHAR(3)     NOT NULL,
     StartDate    TIMESTAMP       NOT NULL,
     EndDate      TIMESTAMP       NOT NULL,
@@ -95,9 +95,9 @@ CREATE TABLE REQUESTS (
     RequestID      INT NOT NULL,
     RequestDate           TIMESTAMP          NOT NULL,
     ServiceCharge  INT                NOT NULL,
-    GuestID        CHAR(15)           NOT NULL,
-    EmployeeID     CHAR(15)           NOT NULL,
-    ServiceID      CHAR(15)        NOT NULL,
+    GuestID        CHAR(7)           NOT NULL,
+    EmployeeID     CHAR(7)           NOT NULL,
+    ServiceID      CHAR(7)        NOT NULL,
     PRIMARY KEY (RequestID),
     CONSTRAINT FK_RequestGuest FOREIGN KEY (GuestID)
         REFERENCES GUEST(GuestID),
@@ -109,7 +109,7 @@ CREATE TABLE REQUESTS (
 
 CREATE TABLE RESERVES (
     ReserveID       INT NOT NULL,
-    GuestID         CHAR(15)           NOT NULL,
+    GuestID         CHAR(7)           NOT NULL,
     RoomNo          INT                NOT NULL,
     CheckIn         TIMESTAMP          NOT NULL,
     CheckOut        TIMESTAMP          NOT NULL,
@@ -122,4 +122,3 @@ CREATE TABLE RESERVES (
         REFERENCES ROOM(RoomNo),
     CONSTRAINT Check_ValidCheckOut CHECK (CheckOut > CheckIn)
 );
-
