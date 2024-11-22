@@ -34,13 +34,13 @@ CREATE TABLE EMPLOYEE (
 ) ;
 
 CREATE TABLE SERVICE (
-    ServiceID      VARCHAR(15)     NOT NULL,
+    ServiceID      CHAR(15)     NOT NULL,
     ServiceName    VARCHAR(30)     NOT NULL,
     PRIMARY KEY (ServiceID)
 ) ;
 
 CREATE TABLE Laundry (
-    ServiceID      VARCHAR(15)     NOT NULL,
+    ServiceID      CHAR(15)     NOT NULL,
     LaundryType VARCHAR(30) NOT NULL,
     PRIMARY KEY (ServiceID),
     CONSTRAINT FK_LaundryService FOREIGN KEY (ServiceID)
@@ -48,7 +48,7 @@ CREATE TABLE Laundry (
 ) ;
 
 CREATE TABLE TravelDesk (
-    ServiceID      VARCHAR(15)     NOT NULL,
+    ServiceID      CHAR(15)     NOT NULL,
     AreaOfInterest VARCHAR(50)     NOT NULL,
     AppointmentDate TIMESTAMP      NOT NULL,
     PRIMARY KEY (ServiceID),
@@ -57,7 +57,7 @@ CREATE TABLE TravelDesk (
 );
 
 CREATE TABLE RentDevice (
-    ServiceID      VARCHAR(15)     NOT NULL,
+    ServiceID      CHAR(15)     NOT NULL,
     DeviceRented     VARCHAR(30)     NOT NULL,
     RentStart    TIMESTAMP       NOT NULL,
     RentEnd      TIMESTAMP       NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE RentDevice (
 );
 
 CREATE TABLE Business (
-    ServiceID      VARCHAR(15)     NOT NULL,
+    ServiceID      CHAR(15)     NOT NULL,
     ConNum     CHAR(3)     NOT NULL,
     StartDate    TIMESTAMP       NOT NULL,
     EndDate      TIMESTAMP       NOT NULL,
@@ -75,4 +75,35 @@ CREATE TABLE Business (
     PRIMARY KEY (ServiceID),
     CONSTRAINT FK_DeviceRentalService FOREIGN KEY (ServiceID)
     REFERENCES SERVICE(ServiceID)
+);
+
+CREATE TABLE Requests (
+    RequestID      INT NOT NULL,
+    RequestDate           TIMESTAMP          NOT NULL,
+    ServiceCharge  INT                NOT NULL,
+    GuestID        CHAR(15)           NOT NULL,
+    EmployeeID     CHAR(15)           NOT NULL,
+    ServiceID      VARCHAR(15)        NOT NULL,
+    PRIMARY KEY (RequestID),
+    CONSTRAINT FK_RequestGuest FOREIGN KEY (GuestID)
+        REFERENCES GUEST(GuestID),
+    CONSTRAINT FK_RequestEmployee FOREIGN KEY (EmployeeID)
+        REFERENCES EMPLOYEE(EmployeeID),
+    CONSTRAINT FK_RequestService FOREIGN KEY (ServiceID)
+        REFERENCES SERVICE(ServiceID)
+);
+
+CREATE TABLE RESERVES (
+    ReserveID       INT NOT NULL,
+    GuestID         CHAR(15)           NOT NULL,
+    RoomNo          INT                NOT NULL,
+    CheckIn         TIMESTAMP          NOT NULL,
+    CheckOut        TIMESTAMP          NOT NULL,
+    ReservationSet  TIMESTAMP          NOT NULL,
+    RoomCharges     INT                NOT NULL,
+    PRIMARY KEY (ReserveID),
+    CONSTRAINT FK_ReserveGuest FOREIGN KEY (GuestID)
+        REFERENCES GUEST(GuestID),
+    CONSTRAINT FK_ReserveRoom FOREIGN KEY (RoomNo)
+        REFERENCES ROOM(RoomNo)
 );
