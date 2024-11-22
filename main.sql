@@ -18,7 +18,7 @@ DROP TABLE Laundry;
 DROP TABLE TravelDesk;
 DROP TABLE RentDevice;
 DROP TABLE Business;
-DROP TABLE Requests;
+DROP TABLE REQUESTS;
 DROP TABLE RESERVES;
 
 CREATE TABLE ROOM (
@@ -91,7 +91,7 @@ CREATE TABLE Business (
     REFERENCES SERVICE(ServiceID)
 );
 
-CREATE TABLE Requests (
+CREATE TABLE REQUESTS (
     RequestID      INT NOT NULL,
     RequestDate           TIMESTAMP          NOT NULL,
     ServiceCharge  INT                NOT NULL,
