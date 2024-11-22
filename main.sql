@@ -1,18 +1,31 @@
 -- DROPPING TO RESET FOR ANY UPDATES
-DROP TABLE ROOM
-DROP TABLE GUEST
-DROP TABLE EMPLOYEE
-DROP TABLE SERVICE
-DROP TABLE Laundry
-DROP TABLE TravelDesk
-DROP TABLE RentDevice
-DROP TABLE Business
+ALTER TABLE Laundry DROP CONSTRAINT FK_LaundryService;
+ALTER TABLE TravelDesk DROP CONSTRAINT FK_TravelDeskService;
+ALTER TABLE RentDevice DROP CONSTRAINT FK_DeviceRentalService;
+ALTER TABLE RentDevice DROP CONSTRAINT Check_ValidRentDate;
+ALTER TABLE Business DROP CONSTRAINT FK_BusinessService;
+ALTER TABLE Requests DROP CONSTRAINT FK_RequestGuest;
+ALTER TABLE Requests DROP CONSTRAINT FK_RequestEmployee;
+ALTER TABLE Requests DROP CONSTRAINT FK_RequestService;
+ALTER TABLE RESERVES DROP CONSTRAINT FK_ReserveGuest;
+ALTER TABLE RESERVES DROP CONSTRAINT FK_ReserveRoom;
+ALTER TABLE RESERVES DROP CONSTRAINT Check_ValidCheckOut;
+DROP TABLE ROOM;
+DROP TABLE GUEST;
+DROP TABLE EMPLOYEE;
+DROP TABLE SERVICE;
+DROP TABLE Laundry;
+DROP TABLE TravelDesk;
+DROP TABLE RentDevice;
+DROP TABLE Business;
+DROP TABLE Requests;
+DROP TABLE RESERVES;
 
 CREATE TABLE ROOM (
     RoomNo              INT     NOT NULL, 
 	Price               INT     NOT NULL, 
 	RoomType               VARCHAR(15)     NOT NULL, 
-	Accessible                 BOOLEAN         NOT NULL, 
+	Accessible                 CHAR(1)        NOT NULL, 
 	MaxGuests               INT     NOT NULL, 
     PRIMARY KEY (RoomNo) 
 ) ;
@@ -63,7 +76,8 @@ CREATE TABLE RentDevice (
     RentEnd      TIMESTAMP       NOT NULL,
     PRIMARY KEY (ServiceID),
     CONSTRAINT FK_DeviceRentalService FOREIGN KEY (ServiceID)
-    REFERENCES SERVICE(ServiceID)
+        REFERENCES SERVICE(ServiceID),
+    CONSTRAINT Check_ValidRentDate CHECK (RentEnd > RentStart)
 );
 
 CREATE TABLE Business (
@@ -73,7 +87,7 @@ CREATE TABLE Business (
     EndDate      TIMESTAMP       NOT NULL,
     NumofRooms INT NOT NULL,
     PRIMARY KEY (ServiceID),
-    CONSTRAINT FK_DeviceRentalService FOREIGN KEY (ServiceID)
+    CONSTRAINT FK_BusinessService FOREIGN KEY (ServiceID)
     REFERENCES SERVICE(ServiceID)
 );
 
@@ -83,7 +97,7 @@ CREATE TABLE Requests (
     ServiceCharge  INT                NOT NULL,
     GuestID        CHAR(15)           NOT NULL,
     EmployeeID     CHAR(15)           NOT NULL,
-    ServiceID      VARCHAR(15)        NOT NULL,
+    ServiceID      CHAR(15)        NOT NULL,
     PRIMARY KEY (RequestID),
     CONSTRAINT FK_RequestGuest FOREIGN KEY (GuestID)
         REFERENCES GUEST(GuestID),
@@ -105,5 +119,7 @@ CREATE TABLE RESERVES (
     CONSTRAINT FK_ReserveGuest FOREIGN KEY (GuestID)
         REFERENCES GUEST(GuestID),
     CONSTRAINT FK_ReserveRoom FOREIGN KEY (RoomNo)
-        REFERENCES ROOM(RoomNo)
+        REFERENCES ROOM(RoomNo),
+    CONSTRAINT Check_ValidCheckOut CHECK (CheckOut > CheckIn)
 );
+
