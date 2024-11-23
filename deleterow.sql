@@ -1,6 +1,7 @@
-/* 
+/*
 Write SQL statements to update 1 column and delete 1 row for each table. 
 You may copy and paste SQL statements from your own DBMS to the file you’ll upload.
+*/
 
 SELECT * FROM GUEST;
 
@@ -16,7 +17,7 @@ DELETE FROM EMPLOYEE
 WHERE EmployeeName = 'JG Quintel';
 
 SELECT * FROM EMPLOYEE;
-*/
+
 
 
 SELECT * FROM ROOM;
@@ -25,3 +26,19 @@ DELETE FROM ROOM
 WHERE RoomNo = 101;
 
 SELECT * FROM ROOM;
+
+
+SELECT * FROM RESERVES;
+
+DELETE FROM RESERVES
+WHERE ReserveID = 123;
+
+SELECT * FROM RESERVES;
+
+
+SELECT * FROM REQUESTS;
+
+DELETE FROM REQUESTS
+WHERE RequestID = '000001';
+
+SELECT * FROM REQUESTS;

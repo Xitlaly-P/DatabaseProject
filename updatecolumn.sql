@@ -38,3 +38,20 @@ WHERE Available = 'N';
 
 SELECT * FROM SERVICE;
 
+-- Adding a $5 fee to all Requested Services
+SELECT * FROM REQUESTS;
+
+UPDATE REQUESTS
+SET ServiceCharge = ServiceCharge + 5;
+
+SELECT * FROM REQUESTS;
+
+-- Adding a $10 reservation fee to all Reserved Rooms
+-- that are on the 5th floor (penthouses)
+SELECT * FROM RESERVES;
+
+UPDATE RESERVES
+SET RoomCharges = RoomCharges + 10
+WHERE RoomNo > 500;
+
+SELECT * FROM RESERVES;
