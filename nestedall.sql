@@ -3,7 +3,7 @@ INSERT INTO ROOM VALUES(507, 500, 'Penthouse', 'Y', 5);
 
 SELECT *
 FROM ROOM
-WHERE MaxGuestsc > ALL (
+WHERE MaxGuests > ALL (
     SELECT PartySize
     FROM RESERVES Reserved
     JOIN GUEST G ON Reserved.GuestID = G.GUESTID
