@@ -1,0 +1,3 @@
+SELECT COUNT(RoomNo), RoomType
+FROM ROOM
+GROUP BY RoomType;
