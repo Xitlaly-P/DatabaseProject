@@ -40,12 +40,14 @@ CREATE TABLE GUEST (
 CREATE TABLE EMPLOYEE (
     EmployeeID      CHAR(7)     NOT NULL,
     EmployeeName    VARCHAR(30)     NOT NULL,
+    PayRate         INT         NOT NULL,
     PRIMARY KEY (EmployeeID)
 ) ;
 
 CREATE TABLE SERVICE (
     ServiceID      CHAR(7)     NOT NULL,
     ServiceName    VARCHAR(30)     NOT NULL,
+    Available      CHAR(1)     NOT NULL,
     PRIMARY KEY (ServiceID)
 ) ;
 
@@ -54,7 +56,8 @@ CREATE TABLE Laundry (
     LaundryType VARCHAR(30) NOT NULL,
     PRIMARY KEY (ServiceID),
     CONSTRAINT FK_LaundryService FOREIGN KEY (ServiceID)
-    REFERENCES SERVICE(SERVICEID)
+        REFERENCES SERVICE(SERVICEID)
+        ON DELETE CASCADE
 ) ;
 
 CREATE TABLE TravelDesk (
@@ -63,7 +66,8 @@ CREATE TABLE TravelDesk (
     AppointmentDate DATE      NOT NULL,
     PRIMARY KEY (ServiceID),
     CONSTRAINT FK_TravelDeskService FOREIGN KEY (ServiceID)
-    REFERENCES SERVICE(ServiceID)
+        REFERENCES SERVICE(ServiceID)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE RentDevice (
@@ -73,7 +77,8 @@ CREATE TABLE RentDevice (
     RentEnd      DATE       NOT NULL,
     PRIMARY KEY (ServiceID),
     CONSTRAINT FK_DeviceRentalService FOREIGN KEY (ServiceID)
-        REFERENCES SERVICE(ServiceID),
+        REFERENCES SERVICE(ServiceID)
+        ON DELETE CASCADE,
     CONSTRAINT Check_ValidRentDate CHECK (RentEnd > RentStart)
 );
 
@@ -85,7 +90,8 @@ CREATE TABLE Business (
     NumofRooms INT NOT NULL,
     PRIMARY KEY (ServiceID),
     CONSTRAINT FK_BusinessService FOREIGN KEY (ServiceID)
-    REFERENCES SERVICE(ServiceID)
+        REFERENCES SERVICE(ServiceID)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE REQUESTS (
@@ -100,9 +106,11 @@ CREATE TABLE REQUESTS (
         REFERENCES GUEST(GuestID)
         ON DELETE CASCADE,
     CONSTRAINT FK_RequestEmployee FOREIGN KEY (EmployeeID)
-        REFERENCES EMPLOYEE(EmployeeID),
+        REFERENCES EMPLOYEE(EmployeeID)
+        ON DELETE CASCADE,
     CONSTRAINT FK_RequestService FOREIGN KEY (ServiceID)
         REFERENCES SERVICE(ServiceID)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE RESERVES (
